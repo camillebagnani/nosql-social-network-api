@@ -1,14 +1,10 @@
-const mongoose = require('mongoose');
+const {Schema, model} = require('mongoose');
 
-const thoughtSchema = new mongoose.Schema({
-    _id: Number
-});
+// const thoughtSchema = new mongoose.Schema({
+//     _id: Number
+// });
 
-const friendSchema = new mongoose.Schema({
-    _id: Number
-});
-
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -26,10 +22,24 @@ const userSchema = new mongoose.Schema({
             message: input => `${input.value} is not a valid email address!`
         }
     },
-    thoughts: [thoughtSchema],
-    friends: [friendSchema]
+    thoughts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'thought',
+        },
+    ],
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'user',
+        },
+    ],
 });
 
-const User = mongoose.model('user', userSchema)
+userSchema.virtual('friendCount').get(function () {
+    return this.friends.length;
+})
+
+const User = model('user', userSchema);
 
 module.exports = User;
