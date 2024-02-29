@@ -1,9 +1,5 @@
 const {Schema, model} = require('mongoose');
 
-// const thoughtSchema = new mongoose.Schema({
-//     _id: Number
-// });
-
 const userSchema = new Schema({
     username: {
         type: String,
