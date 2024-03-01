@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User } = require('../models');
 
 module.exports = {
     async getUsers(req, res) {
@@ -32,11 +32,9 @@ module.exports = {
     },
     async updateSingleUser(req, res) {
         try {
-            const user = await User.findOneAndUpdate({ _id: req.params.userId },
-                {
-                    username: req.body.username,
-                    email: req.body.email,
-                },
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $set: req.body },
                 { new: true });
 
             if (!user) {
@@ -50,10 +48,9 @@ module.exports = {
     async deleteSingleUser(req, res) {
         try {
             const user = await User.findOneAndDelete({ _id: req.params.userId });
-            res.status(200).json(user);
+            res.status(200).json({message: 'User deleted.'});
             console.log(`Deleted ${user}`);
         } catch (err) {
-            console.log('Oops! Something went wrong');
             res.status(500).json({ error: 'Something went wrong.' });
         }
     },
