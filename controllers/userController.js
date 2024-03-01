@@ -3,7 +3,8 @@ const { User } = require('../models');
 module.exports = {
     async getUsers(req, res) {
         try {
-            const users = await User.find();
+            const users = await User.find()
+            .select('-__v');
             res.json(users)
         } catch (err) {
             res.status(500).json(err);
@@ -35,7 +36,9 @@ module.exports = {
             const user = await User.findOneAndUpdate(
                 { _id: req.params.userId },
                 { $set: req.body },
-                { new: true });
+                { new: true }
+                )
+                .select('-__v');
 
             if (!user) {
                 return res.status(404).json({ message: 'No user with that ID' });
@@ -60,7 +63,8 @@ module.exports = {
                 { _id: req.params.userId },
                 { $addToSet: { friends: req.params.friendId } },
                 { runValidators: true, new: true }
-            );
+            )
+            .select('-__v');
 
             if (!user) {
                 return res.status(404).json({ message: 'No user with that ID' });
@@ -77,7 +81,8 @@ module.exports = {
                 { _id: req.params.userId },
                 { $pull: { friends: req.params.friendId} },
                 { runValidators: true, new: true },
-            );
+            )
+            .select('-__v');
 
             if (!user) {
                 return res.status(404).json({ message: 'No user with that ID' });
