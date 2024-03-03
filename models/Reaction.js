@@ -3,7 +3,6 @@ const { Schema, Types } = require('mongoose')
 const reactionSchema = new Schema({
     reactionId: {
         type: Schema.Types.ObjectId,
-        //QUESTION ** add default value set to a new ObjectId
         default: () => new Types.ObjectId(),
     },
     reactionBody: {
@@ -18,16 +17,17 @@ const reactionSchema = new Schema({
     //QUESTION 
     createdAt: {
         type: Date,
-        default: Date.now(),
-        timestamps: true,
+        default: Date.now,
+        get: timestamp => new Date(timestamp).toLocaleString()
     },
 },
     {
         toJSON: {
-            // getters: true,
-            virtuals: true
+            virtuals: true,
+            getters: true
         },
-        id: false
+        id: false,
+        timestamps: true
     },
 );
 

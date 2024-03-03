@@ -10,12 +10,8 @@ const thoughtSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now(),
-        timestamps: true,
-        toJSON: {
-            getters: true,
-            virtuals: true
-        },
+        default: Date.now,
+        get: timestamp => new Date(timestamp).toLocaleString()
     },
     username: {
         type: String,
@@ -23,11 +19,14 @@ const thoughtSchema = new Schema({
     },
     reactions: [reactionSchema]
 },
+// Options for the document
 {
     toJSON: {
-        virtuals: true
+        virtuals: true,
+        getters: true,
     },
-    id: false
+    id: false,
+    timestamps: true
 }
 );
 
