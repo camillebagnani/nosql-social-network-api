@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
+// Import reactionSchema to create virtuals
 const reactionSchema = require('./Reaction');
 
+// Schema that makes up a thought
 const thoughtSchema = new Schema({
     thoughtText: {
         type: String,
@@ -30,6 +32,7 @@ const thoughtSchema = new Schema({
 }
 );
 
+// Creates a virtual property called 'reactionCount' that gets the amount og comments per thought
 thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
 })

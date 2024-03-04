@@ -1,5 +1,6 @@
 const { Schema, Types } = require('mongoose')
 
+// Schema for what makes a reaction
 const reactionSchema = new Schema({
     reactionId: {
         type: Schema.Types.ObjectId,
@@ -14,7 +15,6 @@ const reactionSchema = new Schema({
         type: String,
         required: true,
     },
-    //QUESTION 
     createdAt: {
         type: Date,
         default: Date.now,

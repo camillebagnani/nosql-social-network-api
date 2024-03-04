@@ -1,5 +1,6 @@
 const {Schema, model} = require('mongoose');
 
+// Schema that makes a user
 const userSchema = new Schema({
     username: {
         type: String,
@@ -11,6 +12,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        // Validates the user enters a valid email address using regular expression
         validate: {
             validator: function(value) {
                 return /^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z]{2,15})$/.test(value);
@@ -21,13 +23,13 @@ const userSchema = new Schema({
     thoughts: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'thought',
+            ref: 'thought', // References the idea from the Thought model
         },
     ],
     friends: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'user',
+            ref: 'user', // Self-references to get number of friends
         },
     ],
 },
@@ -39,6 +41,7 @@ const userSchema = new Schema({
 }
 );
 
+// Creates a virtual property that returns the length of the friends array
 userSchema.virtual('friendCount').get(function () {
     return this.friends.length;
 })
