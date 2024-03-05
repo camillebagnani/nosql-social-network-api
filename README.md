@@ -15,6 +15,8 @@ This project taught me:
 * How to use MongoDB operators to manipulate model properties
 * and more
 
+Please find the walkthrough video here: https://drive.google.com/file/d/1sp5qS0LBQlwVsQIvh6bQN208yWps6KV6/view?usp=sharing
+
 ## Installation
 Use npm i to install dependencies below.
 
